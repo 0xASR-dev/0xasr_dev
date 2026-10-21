@@ -1,0 +1,58 @@
+---
+title: "ParkySpot"
+summary: "ESP32 sensors to a live parking map"
+year: 2025
+role: "Full-stack developer"
+status: "live"
+tier: "case-study"
+authorship: "own"
+stack:
+  - "ESP32"
+  - "Python"
+  - "JavaScript"
+links:
+  repo: "https://github.com/0xASR-dev"
+disclosures:
+  - "Live status should be verified with the owner before publication."
+metrics:
+  - label: "Repo"
+    value: "Prototype and signal pipeline"
+    evidence: "https://github.com/0xASR-dev"
+order: 2
+---
+
+## What it does
+
+ParkySpot takes an ESP32-based parking signal and turns it into a simple real-time view of availability. The point is to close the gap between hardware readings and a usable place-finding decision.
+
+## The constraint that shaped it
+
+The data path was noisy and physically distributed, but the product had to remain understandable to a driver who wanted instant confidence, not a technical debugging dashboard.
+
+## How it works
+
+<svg viewBox="0 0 560 180" aria-label="ParkySpot architecture diagram" role="img" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:12px;background:transparent;">
+  <rect x="20" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="80" y="72" text-anchor="middle" font-size="14" fill="currentColor">ESP32 sensor</text>
+  <rect x="220" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="280" y="72" text-anchor="middle" font-size="14" fill="currentColor">Normalize</text>
+  <rect x="420" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="480" y="72" text-anchor="middle" font-size="14" fill="currentColor">Map view</text>
+  <path d="M140 70 L220 70" stroke="currentColor" stroke-width="1.2" fill="none" />
+  <path d="M340 70 L420 70" stroke="currentColor" stroke-width="1.2" fill="none" />
+  <text x="280" y="130" text-anchor="middle" font-size="12" fill="currentColor">Availability + confidence</text>
+</svg>
+
+The design treats the sensor feed as a noisy signal that gets normalized into a clear map state. This keeps the UI simple while preserving the fact that the underlying data is not perfect.
+
+## What I built
+
+I handled the prototype from signal capture to the user-facing interpretation layer. That included the sensor-to-application flow, the logic for turning raw state into a usable parking signal, and the interface for presenting it as an at-a-glance map.
+
+## What I'd change
+
+I would add stronger live-data quality checks and an explicit confidence indicator so users understand when a spot is likely stale, sparse, or degraded.
+
+## Evidence
+
+- Repository: https://github.com/0xASR-dev

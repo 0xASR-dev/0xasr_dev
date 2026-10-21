@@ -1,0 +1,105 @@
+---
+import '../styles/index.css';
+---
+
+<!DOCTYPE html>
+<html lang="en-IN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F9F9F8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Avneesh Singh: Software engineer working across IoT, data and the web." />
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch (error) {
+        // Ignore storage access failures and keep the CSS defaults.
+      }
+    </script>
+    <title><slot name="title">Avneesh Singh</slot></title>
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Avneesh Singh",
+        "jobTitle": "Software engineer",
+        "url": "https://github.com/0xASR-dev",
+        "sameAs": [
+          "https://github.com/0xASR-dev",
+          "https://www.linkedin.com/in/avneesh-singh",
+          "https://x.com/avneeshsingh"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <nav aria-label="Primary" class="site-nav">
+        <a href="/" aria-current="page">Avneesh Singh</a>
+        <div class="nav-links">
+          <a href="/work">Work</a>
+          <a href="/resume">Resume</a>
+          <button type="button" class="kbd-hint" aria-label="Open command palette">⌘K</button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="/colophon">Colophon</a>
+        <a href="https://github.com/0xASR-dev" target="_blank" rel="noopener noreferrer">Source</a>
+      </div>
+      <theme-toggle></theme-toggle>
+    </footer>
+
+    <command-palette></command-palette>
+
+    <script type="module">
+      import '../elements/signal-figure.ts';
+      import '../elements/copy-email.ts';
+      import '../elements/theme-toggle.ts';
+      import '../elements/palette.ts';
+
+      const prefetchLinks = () => {
+        const prefetched = new Set<string>();
+        const prefetch = (target: HTMLAnchorElement) => {
+          const href = target.getAttribute('href');
+          if (!href || href.startsWith('http') || href.startsWith('#')) {
+            return;
+          }
+          const url = new URL(href, window.location.origin);
+          if (url.origin !== window.location.origin) return;
+          if (prefetched.has(url.pathname)) return;
+          prefetched.add(url.pathname);
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = url.pathname;
+          document.head.appendChild(link);
+        };
+
+        document.addEventListener('pointerover', (event) => {
+          const target = event.target instanceof HTMLElement ? event.target.closest('a') : null;
+          if (target) prefetch(target);
+        }, { passive: true });
+
+        document.addEventListener('focusin', (event) => {
+          const target = event.target instanceof HTMLElement ? event.target.closest('a') : null;
+          if (target) prefetch(target);
+        });
+      };
+
+      prefetchLinks();
+    </script>
+  </body>
+</html>

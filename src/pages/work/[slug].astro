@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.mdx$/, '') }
+  }));
+}
+
+const { slug } = Astro.params;
+const entries = await getCollection('work');
+const entry = entries.find((item) => {
+  const id = item.id.replace(/\\.mdx$/, '').replace(/\\/g, '/');
+  return id === slug || id.endsWith(`/${slug}`) || item.id === `${slug}.mdx` || item.id === slug;
+});
+
+if (!entry) {
+  throw new Error(`No work entry found for slug: ${slug}`);
+}
+
+const { title, summary, year, role, status, stack, links, disclosures, metrics } = entry.data;
+const { Content } = await render(entry);
+---
+
+<Base>
+  <div class="page case-study">
+    <p class="eyebrow">Case study / {year}</p>
+    <h1>{title}</h1>
+    <p class="descriptor">{summary}</p>
+
+    <div class="meta">
+      <div>
+        <span>Role</span>
+        <strong>{role}</strong>
+      </div>
+      <div>
+        <span>Status</span>
+        <strong>{status}</strong>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href={links.repo} target="_blank" rel="noopener noreferrer">Repository ↗</a>
+      {links.live && <a href={links.live} target="_blank" rel="noopener noreferrer">Live view ↗</a>}
+    </div>
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    <div class="details">
+      <section>
+        <h2>Stack</h2>
+        <ul>
+          {stack.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      {metrics.length > 0 && (
+        <section>
+          <h2>Evidence</h2>
+          <ul>
+            {metrics.map((metric) => (
+              <li>
+                <strong>{metric.label}:</strong> {metric.value}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {disclosures.length > 0 && (
+        <section>
+          <h2>Disclosures</h2>
+          <ul>
+            {disclosures.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+
+    <div class="footer-actions">
+      <a href="/work">← Back to work</a>
+    </div>
+  </div>
+
+  <style>
+    .case-study {
+      max-width: 62rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin: 2rem 0;
+      padding: 1rem 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .meta div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 10rem;
+    }
+
+    .meta span {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .prose {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .prose h2,
+    .prose h3 {
+      margin-top: 2rem;
+    }
+
+    .prose p,
+    .prose li {
+      color: var(--ink-muted);
+      max-width: var(--measure);
+    }
+
+    .details {
+      display: grid;
+      gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .details section {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .details h2 {
+      font-size: var(--step-0);
+    }
+
+    .details ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--ink-muted);
+    }
+
+    .footer-actions {
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 720px) {
+      .meta {
+        flex-direction: column;
+      }
+    }
+  </style>
+</Base>

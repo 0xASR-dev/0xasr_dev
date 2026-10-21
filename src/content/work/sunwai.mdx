@@ -1,0 +1,58 @@
+---
+title: "SUNWAI"
+summary: "Budget priorities from citizen demand"
+year: 2026
+role: "Full-stack developer"
+status: "demo"
+tier: "case-study"
+authorship: "own"
+stack:
+  - "Python"
+  - "TypeScript"
+  - "PostgreSQL"
+links:
+  repo: "https://github.com/0xASR-dev"
+disclosures:
+  - "Demo data is synthetic."
+metrics:
+  - label: "Repo"
+    value: "Source and project notes"
+    evidence: "https://github.com/0xASR-dev"
+order: 1
+---
+
+## What it does
+
+SUNWAI translates community demand into a clearer public-priority signal. The goal is not to replace decision-makers, but to make noisy asks legible enough to compare, defend, and act on.
+
+## The constraint that shaped it
+
+The hardest part was designing a system that still worked when the input was incomplete, messy, or contradictory. A public-systems tool has to make trade-offs legible without pretending the data itself is perfect.
+
+## How it works
+
+<svg viewBox="0 0 560 180" aria-label="SUNWAI architecture diagram" role="img" style="width:100%;height:auto;border:1px solid var(--rule);border-radius:12px;background:transparent;">
+  <rect x="20" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="80" y="72" text-anchor="middle" font-size="14" fill="currentColor">Citizen asks</text>
+  <rect x="220" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="280" y="72" text-anchor="middle" font-size="14" fill="currentColor">Rank + model</text>
+  <rect x="420" y="40" width="120" height="60" rx="10" fill="transparent" stroke="currentColor" stroke-width="1" />
+  <text x="480" y="72" text-anchor="middle" font-size="14" fill="currentColor">Budget view</text>
+  <path d="M140 70 L220 70" stroke="currentColor" stroke-width="1.2" fill="none" />
+  <path d="M340 70 L420 70" stroke="currentColor" stroke-width="1.2" fill="none" />
+  <text x="280" y="130" text-anchor="middle" font-size="12" fill="currentColor">Filters, fairness, urgency, feasibility</text>
+</svg>
+
+The system ingests structured demand notes, weighs them against urgency and fairness, and surfaces a ranked budget signal instead of a raw pile of requests.
+
+## What I built
+
+I worked on the product logic, the data-flow design, and the dashboard narrative so it could explain trade-offs without feeling like a black box. The system was intentionally framed as a decision-support tool, not a claim that the merit of a project could be reduced to one number.
+
+## What I'd change
+
+I would add a stricter evidence layer so each recommendation links back to the original citizen theme, a policy assumption, and a documented risk or uncertainty.
+
+## Evidence
+
+- Repository: https://github.com/0xASR-dev

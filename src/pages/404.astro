@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base>
+  <div class="page">
+    <h1>404</h1>
+    <p class="message">That page isn't here.</p>
+
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/work">Work</a>
+    </div>
+  </div>
+
+  <style>
+    .message {
+      color: var(--ink-muted);
+      font-size: var(--step-0);
+      margin: var(--space-6) 0;
+    }
+
+    .links {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .links a {
+      color: var(--ink-muted);
+      text-decoration: none;
+      font-size: var(--step-0);
+      transition: color var(--dur-fast) ease-out;
+    }
+
+    .links a:hover {
+      color: var(--accent);
+    }
+  </style>
+</Base>

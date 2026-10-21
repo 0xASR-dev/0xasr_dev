@@ -1,0 +1,196 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const profile = (await getCollection('profile'))[0]?.data;
+const featuredWork = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+
+<Base>
+  <div class="page">
+    <h1>{profile?.name ?? 'Avneesh Singh'}</h1>
+    <p class="descriptor">{profile?.descriptor ?? 'Software engineer working across IoT, data and the web'}</p>
+
+    <div class="bio">
+      <p>
+        {profile?.intro ?? "I'm finishing a B.Tech in IoT at MITS Gwalior and a BS in Data Science at IIT Madras. I build things ..."}
+      </p>
+    </div>
+
+    <div class="figure-container">
+      <signal-figure>
+        <svg class="signal-fallback" viewBox="0 0 640 96" role="img" aria-label="Filtered signal trace">
+          <path d="M0 48 C60 48, 90 56, 120 44 S180 32, 220 46 S280 62, 320 38 S390 22, 420 48 S490 72, 640 52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </signal-figure>
+    </div>
+
+    <div class="section">
+      <h2 class="section-label">selected work</h2>
+      <div class="work-list">
+        {featuredWork.map((project, index) => {
+          const slug = project.id.replace(/\.mdx$/, '');
+          return (
+            <a class="work-row" href={`/work/${slug}`}>
+              <div class="work-index">{String(index + 1).padStart(2, '0')}</div>
+              <div class="work-title">{project.data.title}</div>
+              <div class="work-summary">{project.data.summary}</div>
+              <div class="work-year">{project.data.year}</div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-label">experience</h2>
+      <div class="experience-list">
+        <div class="experience-row">
+          <div class="experience-meta">Jul 2026 – present</div>
+          <div class="experience-title">Freelance full-stack developer</div>
+          <div class="experience-summary">Building full-stack web applications and contributing to open-source projects</div>
+        </div>
+        <div class="experience-row">
+          <div class="experience-meta">Mar – Jun 2026</div>
+          <div class="experience-title">Data analytics and management intern</div>
+          <div class="experience-summary">Codec Technologies</div>
+        </div>
+        <div class="experience-row">
+          <div class="experience-meta">Sep 2025 – Sep 2026</div>
+          <div class="experience-title">Technical Head (led a 500+ member technical community)</div>
+          <div class="experience-summary">Sundarbans House, IIT Madras BS programme</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-label">elsewhere</h2>
+      <div class="elsewhere">
+        <div class="links">
+          <a href={profile?.links.github ?? 'https://github.com/0xASR-dev'} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href={profile?.links.linkedin ?? 'https://linkedin.com/in/avneesh-singh'} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          {profile?.links.x && <a href={profile.links.x} target="_blank" rel="noopener noreferrer">X ↗</a>}
+        </div>
+        <div class="contact">
+          <copy-email email={profile?.email ?? 'avneeshsingh.job@gmail.com'}></copy-email>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .figure-container {
+      margin: var(--space-8) 0;
+    }
+
+    .signal-fallback {
+      display: block;
+      width: 100%;
+      height: auto;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .section {
+      margin-top: 4rem;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .work-list {
+      margin-top: var(--space-3);
+    }
+
+    .work-row {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1.2fr) minmax(0, 1.8fr) auto;
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .work-index {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+    }
+
+    .work-title {
+      font-size: var(--step-1);
+      font-weight: 500;
+    }
+
+    .work-summary {
+      color: var(--ink-muted);
+    }
+
+    .work-year {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      justify-self: end;
+    }
+
+    .work-row:hover .work-title,
+    .work-row:hover .work-summary,
+    .work-row:hover .work-year {
+      color: var(--accent);
+    }
+
+    .experience-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: center;
+    }
+
+    .experience-meta {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+    }
+
+    .experience-title {
+      font-size: var(--step-1);
+      font-weight: 500;
+    }
+
+    .experience-summary {
+      color: var(--ink-muted);
+    }
+
+    .elsewhere {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      margin-top: var(--space-3);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 720px) {
+      .work-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+      }
+
+      .work-year {
+        justify-self: start;
+      }
+    }
+  </style>
+</Base>

@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base>
+  <div class="page">
+    <h1>Colophon</h1>
+
+    <div class="section">
+      <h2 class="section-label">stack</h2>
+      <ul class="stack-list">
+        <li>Astro static site generation</li>
+        <li>TypeScript with a small content model</li>
+        <li>Hand-authored CSS tokens and progressive enhancement</li>
+        <li>IBM Plex Sans and IBM Plex Mono, self-hosted</li>
+        <li>Vanilla custom elements for the figure and interactive affordances</li>
+        <li>Static hosting with a committed content snapshot fallback</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-label">figure</h2>
+      <p>
+        The signal figure is a simulation of a sensor signal with noise filtering. It uses a pure TypeScript model that drives both the animated canvas and the static SVG fallback. The readout shows the signal-to-noise ratio (SNR) in dB, computed from the same model that draws the lines.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-label">source</h2>
+      <p>
+        The source code is available on <a href="https://github.com/0xASR-dev" target="_blank" rel="noopener noreferrer">GitHub</a>.
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .section {
+      margin: var(--space-8) 0;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .stack-list {
+      list-style-type: none;
+      padding: 0;
+      margin: var(--space-3) 0 0;
+    }
+
+    .stack-list li {
+      margin-bottom: var(--space-2);
+    }
+
+    a {
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color var(--dur-fast) ease-out;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+  </style>
+</Base>

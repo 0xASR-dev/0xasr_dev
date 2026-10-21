@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# build output
+.dist/
+dist/
+.astro/
+.astro-cache/
+.vercel/
+.netlify/
+coverage/
+playwright-report/
+test-results/
+
+# generated files
+*.log
+*.tsbuildinfo
+*.pid
+
+# local env / editor state
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.claude/
+.vscode/
+
+# keep only the source + required app assets
+# do not ignore the project source tree, docs, scripts, tests, or public assets intentionally shipped
